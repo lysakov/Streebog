@@ -1,6 +1,7 @@
-#include "mappings.hpp"
+#include "block.hpp"
+#include "hash.hpp"
 
-Block::Block<8> Context::substitution (const Block::Block<8> block) const noexcept
+Block::Block<8> Context::substitution (const Block::Block<8> &block) const noexcept
 {
     uint64_t subs_table[] = {
         252, 238, 221,  17, 207, 110,  49,  22, 251, 196, 250,
@@ -28,7 +29,7 @@ Block::Block<8> Context::substitution (const Block::Block<8> block) const noexce
         116, 210, 230, 244, 180, 192, 209, 102, 175, 194,  57,
         75,  99, 182
     };
-    return Block::Block<8>(subs_table[(uint64_t)block]);
+    return Block::Block<8>(subs_table[(uint8_t)block]);
 }
 
 std::vector< Block::Block<8> >& Context::permutation (std::vector< Block::Block<8> > &seq) const noexcept
@@ -88,7 +89,7 @@ Block::Block<512> Context::L (const Block::Block<512> &block) const noexcept
     return Block::Block<512>(seq);
 }
 
-Block::Block<512> Context::iteration_const (const Block::Block<512> &k, size_t i) const noexcept
+Block::Block<512> Context::iteration_const (const Block::Block<512> &k, size_t i) const
 {
     enum {
         ZERO_ROUND = 0,
@@ -98,7 +99,7 @@ Block::Block<512> Context::iteration_const (const Block::Block<512> &k, size_t i
         return k;
     }
     if (i <= ROUNDS_NUM) {
-        return L(P(S(k ^ Block::Block<512>((const uint8_t*)iter_const_table[i - 1].c_str(), iter_const_table[i].size()))));
+        return L(P(S(k ^ Block::Block<512>((const uint8_t*)iter_const_table[i - 1].c_str(), BLOCK_SIZE))));
     }
     throw std::runtime_error("iteration_const : error");
 }

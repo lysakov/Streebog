@@ -86,17 +86,28 @@ Block<S>::Block (const char *bitset, size_t size) : Block((uint8_t*)bitset, size
 }
 
 template <size_t S>
-Block<S>::Block (uint64_t num) : Block()
+Block<S>::Block (uint64_t num)
 {
     enum {
         NUM_SIZE = 8
     };
     uint8_t *num_arr;
     num_arr = (uint8_t*)&num;
-    size_t min = S / BYTE_SIZE <= NUM_SIZE ? S / BYTE_SIZE : NUM_SIZE;
+    size_t min;
+    if (S / BYTE_SIZE <= NUM_SIZE) {
+        min = S / BYTE_SIZE;
+    } else {
+        min = NUM_SIZE;
+    }
     for (size_t i = 0; i < min; ++i) {
         this->bitset[i] = num_arr[i];
     }
+}
+
+template <size_t S>
+Block<S>::operator uint8_t () const noexcept
+{
+    return *((uint8_t*)bitset);
 }
 
 template <size_t S>

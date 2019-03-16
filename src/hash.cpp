@@ -76,7 +76,8 @@ void Context::fill_buffer ()
     if (last_iteration || (!cur_buf_size && gcount % BLOCK_SIZE)) {
         _eof_ = true;
     }
-    gcount = cur_buf_size > BLOCK_SIZE ? BLOCK_SIZE : cur_buf_size;
+    const size_t block_size = BLOCK_SIZE;
+    gcount = cur_buf_size > block_size ? block_size : cur_buf_size;
     if (!gcount) {
         last_iteration = true;
     }
@@ -86,7 +87,8 @@ void Context::fill_buffer ()
 
 void Context::modify_buffer ()
 {
-    gcount = (cur_buf_size - cur_buf_pos) > BLOCK_SIZE ? BLOCK_SIZE : (cur_buf_size - cur_buf_pos);
+    const size_t block_size = BLOCK_SIZE;
+    gcount = (cur_buf_size - cur_buf_pos) > block_size ? block_size : (cur_buf_size - cur_buf_pos);
     cur_block = Block::Block<512>(buf + cur_buf_pos, gcount);
     cur_buf_pos += gcount;
 }

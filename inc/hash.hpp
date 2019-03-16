@@ -77,14 +77,14 @@ class Context
     Block::Block<512> result;
     uint64_t cnt = 0;
     void matrix_init (std::string*, size_t);
-    Block::Block<8> substitution (const Block::Block<8>) const noexcept;
+    Block::Block<8> substitution (const Block::Block<8>&) const noexcept;
     std::vector< Block::Block<8> >& permutation (std::vector< Block::Block<8> >&) const noexcept;
     Block::Block<64> linear_transformation (const Block::Block<64>&) const noexcept;
     Block::Block<512> X (const Block::Block<512>&, const Block::Block<512>&) const noexcept;
     Block::Block<512> S (const Block::Block<512>&) const noexcept;
     Block::Block<512> P (const Block::Block<512>&) const noexcept;
     Block::Block<512> L (const Block::Block<512>&) const noexcept;
-    Block::Block<512> iteration_const (const Block::Block<512>&, size_t) const noexcept;
+    Block::Block<512> iteration_const (const Block::Block<512>&, size_t) const;
     Block::Block<512> E (const Block::Block<512>&, const Block::Block<512>&) const noexcept;
     Block::Block<512> round_function (const Block::Block<512>&, const Block::Block<512>&, const Block::Block<512>&) const noexcept;
     void read_block ();

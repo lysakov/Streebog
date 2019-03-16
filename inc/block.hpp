@@ -29,6 +29,7 @@ namespace Block
         template <size_t T> std::vector< Block<T> > split () const;
         template <size_t T> friend std::ostream& operator << (std::ostream&, const Block<T>&);
         operator uint64_t () const noexcept;
+        operator uint8_t () const noexcept;
         Block operator + (const Block&) const noexcept;
         Block operator ^ (const Block&) const noexcept;
         Block operator * (bool) const noexcept;
